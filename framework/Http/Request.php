@@ -11,7 +11,7 @@ final class Request
         private readonly array $postData,
         private readonly array $cookies,
         private readonly array $files,
-        public readonly array $server,
+        private readonly array $server,
     ) {
 
     }
@@ -19,5 +19,17 @@ final class Request
     public static function createFromGlobals(): static
     {
         return new static($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
+    }
+
+    public function getPath(): string
+    {
+        $urlData = parse_url($this->server['REQUEST_URI']);
+
+        return $urlData['path'];
+    }
+
+    public function getMethod(): string
+    {
+        return $this->server['REQUEST_METHOD'];
     }
 }
