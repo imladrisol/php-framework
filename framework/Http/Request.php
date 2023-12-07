@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Imladrisol\Framework\Http;
+namespace Framework\Http;
 
 final class Request
 {
@@ -11,7 +11,7 @@ final class Request
         private readonly array $postData,
         private readonly array $cookies,
         private readonly array $files,
-        private readonly array $server,
+        public readonly array $server,
     ) {
 
     }

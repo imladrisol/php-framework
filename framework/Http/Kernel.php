@@ -2,14 +2,32 @@
 
 declare(strict_types=1);
 
-namespace Imladrisol\Framework\Http;
+namespace Framework\Http;
+
+use FastRoute\RouteCollector;
+use function FastRoute\simpleDispatcher;
 
 final class Kernel
 {
     public function handle(Request $request): Response
     {
-        $content = '<h1>Hello, World</h1>';
+        $dispatcher = simpleDispatcher(function (RouteCollector $collector) {
+            $collector->addRoute('GET', '/', function () {
+                $content = '<h1>Hello, World</h1>';
 
-        return new Response($content, 200);
+                return new Response($content);
+            });
+
+            $collector->get('/posts/{id}', function (array $vars) {
+                $content =  "<v1>Post - {$vars['id']}</v1>";
+
+                return new Response($content);
+            });
+        });
+
+        $routeInfo = $dispatcher->dispatch($request->server['REQUEST_METHOD'], $request->server['REQUEST_URI']);
+        [$status, $handler, $vars] = $routeInfo;
+
+        return $handler($vars);
     }
 }

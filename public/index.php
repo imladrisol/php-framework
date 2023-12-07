@@ -2,8 +2,8 @@
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use Imladrisol\Framework\Http\Kernel;
-use Imladrisol\Framework\Http\Request;
+use Framework\Http\Kernel;
+use Framework\Http\Request;
 
 $request = Request::createFromGlobals();
 

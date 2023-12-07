@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Imladrisol\Framework\Http;
+namespace Framework\Http;
 
 final class Response
 {
