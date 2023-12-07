@@ -18,7 +18,7 @@ final class Kernel
                 return new Response($content);
             });
 
-            $collector->get('/posts/{id}', function (array $vars) {
+            $collector->get('/posts/{id:\d+}', function (array $vars) {
                 $content =  "<v1>Post - {$vars['id']}</v1>";
 
                 return new Response($content);
