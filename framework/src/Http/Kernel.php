@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Framework\Http;
 
 use Framework\Http\Exceptions\HttpException;
-use Framework\Http\Exceptions\MethodIsNotAllowedException;
-use Framework\Http\Exceptions\RouteNotFoundException;
 use Framework\Routing\RouterInterface;
 
 final class Kernel

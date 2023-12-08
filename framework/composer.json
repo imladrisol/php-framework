@@ -1,0 +1,14 @@
+{
+    "name": "imladrisol/php-framework",
+    "minimum-stability": "dev",
+    "description": "PHP Framework",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "src/"
+        }
+    },
+    "require" : {
+        "nikic/fast-route": "^1.3"
+    }
+}
