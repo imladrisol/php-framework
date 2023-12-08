@@ -31,4 +31,16 @@ class ContainerTest extends TestCase
         $this->assertTrue($container->has('somecode-class'));
         $this->assertFalse($container->has('somecode-class1'));
     }
+
+    public function testRecursivelyAutowired()
+    {
+        $container = new Container();
+        $container->add('somecode-class', SomecodeClass::class);
+        /** @var SomecodeClass $somecodeClass */
+        $somecodeClass = $container->get('somecode-class');
+        $dependencyTest = $somecodeClass->getDependencyClass();
+        $this->assertInstanceOf(DependencyTestClass::class, $somecodeClass->getDependencyClass());
+        $this->assertInstanceOf(Youtube::class, $dependencyTest->getYoutube());
+        $this->assertInstanceOf(Telegram::class, $dependencyTest->getTelega());
+    }
 }
