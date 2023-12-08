@@ -23,4 +23,12 @@ class ContainerTest extends TestCase
         $this->expectException(ContainerException::class);
         $container->add('no-class');
     }
+
+    public function testHasService()
+    {
+        $container = new Container();
+        $container->add('somecode-class', SomecodeClass::class);
+        $this->assertTrue($container->has('somecode-class'));
+        $this->assertFalse($container->has('somecode-class1'));
+    }
 }
