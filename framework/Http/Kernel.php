@@ -17,7 +17,6 @@ final class Kernel
         try {
             [$routerHandler, $vars] = $this->router->dispatch($request);
 
-
             $response = call_user_func_array($routerHandler, $vars);
         } catch (\Throwable $e) {
             $response = new Response($e->getMessage(), 500);
