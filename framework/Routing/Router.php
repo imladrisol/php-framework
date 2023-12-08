@@ -44,13 +44,17 @@ final class Router implements RouterInterface
 
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
-                throw new RouteNotFoundException('Route not found');
+                $e = new RouteNotFoundException('Route not found');
+                $e->setStatusCode(404);
+                throw $e;
             case Dispatcher::FOUND:
                 return [$routeInfo[1], $routeInfo[2]];
             case Dispatcher::METHOD_NOT_ALLOWED:
                 $allowMethods = implode(',', $routeInfo[1]);
-                $message = 'Method is not allowed. PLease, use one of these: ' . $allowMethods;
-                throw new MethodIsNotAllowedException($message);
+                $message = 'Method is not allowed. Please, use one of these: ' . $allowMethods;
+                $e = new MethodIsNotAllowedException($message);
+                $e->setStatusCode(405);
+                throw $e;
         }
     }
 }
