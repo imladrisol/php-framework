@@ -1,0 +1,18 @@
+{% extends 'default.html.twig' %}
+
+{% block main %}
+<h1>Add new post</h1>
+    <form>
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input class="form-control" type="text" id="title" aria-describedby="titleHelp">
+            <div id="titleHelp" class="form-text">add post title</div>
+        </div>
+        <div class="mb-3">
+            <label for="body" class="form-label">Content</label>
+            <textarea class="form-control" name="body" id="" cols="30" rows="10"></textarea>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+{% endblock %}
