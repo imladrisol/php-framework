@@ -6,17 +6,21 @@ namespace Framework\Http;
 
 use Framework\Http\Exceptions\HttpException;
 use Framework\Routing\RouterInterface;
+use League\Container\Container;
 
 final class Kernel
 {
-    public function __construct(private RouterInterface $router)
+    public function __construct(
+        private RouterInterface $router,
+        private Container $container
+    )
     {
     }
 
     public function handle(Request $request): Response
     {
         try {
-            [$routerHandler, $vars] = $this->router->dispatch($request);
+            [$routerHandler, $vars] = $this->router->dispatch($request, $this->container);
 
             $response = call_user_func_array($routerHandler, $vars);
         } catch (HttpException $e) {

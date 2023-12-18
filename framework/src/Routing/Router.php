@@ -9,20 +9,29 @@ use FastRoute\RouteCollector;
 use Framework\Http\Exceptions\MethodIsNotAllowedException;
 use Framework\Http\Exceptions\RouteNotFoundException;
 use Framework\Http\Request;
+use League\Container\Container;
 use function FastRoute\simpleDispatcher;
 
 final class Router implements RouterInterface
 {
-    public function dispatch(Request $request): array
+    private array $routes = [];
+
+    public function dispatch(Request $request, Container $container): array
     {
         [$handler, $vars] = $this->extractRouteInfo($request);
 
         if (is_array($handler)) {
-            [$controller, $action] = $handler;
-            $handler = [new $controller(), $action];
+            [$controllerId, $action] = $handler;
+            $controller = $container->get($controllerId);
+            $handler = [$controller, $action];
         }
 
         return [$handler, $vars];
+    }
+
+    public function registerRoutes(array $routes): void
+    {
+        $this->routes = $routes;
     }
 
     /**
@@ -34,8 +43,7 @@ final class Router implements RouterInterface
     private function extractRouteInfo(Request $request): array
     {
         $dispatcher = simpleDispatcher(function (RouteCollector $collector) {
-            $routes = include BASE_PATH . '/routes/web.php';
-            foreach ($routes as $route) {
+            foreach ($this->routes as $route) {
                 $collector->addRoute(...$route);
             }
         });
