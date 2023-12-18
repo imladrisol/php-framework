@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Services\YoutubeService;
+use Framework\Controller\AbstractController;
 use Framework\Http\Response;
 
-final class HomeController
+final class HomeController extends AbstractController
 {
     private YoutubeService $youtubeService;
 
@@ -19,9 +20,8 @@ final class HomeController
 
     public function index(): Response
     {
-        $content = '<h1>Hello, World</h1>';
-        $content .= '<a href="' . $this->youtubeService->getChannelUrl() . '">channel</a>';
-
-        return new Response($content);
+        return $this->render('home.html.twig', [
+            'youtube' => $this->youtubeService->getChannelUrl(),
+        ]);
     }
 }

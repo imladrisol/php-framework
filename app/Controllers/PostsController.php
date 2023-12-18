@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use Framework\Controller\AbstractController;
 use Framework\Http\Response;
 
-final class PostsController
+final class PostsController extends AbstractController
 {
     public function show(int $id): Response
     {
-        $content = "<h1>Posts - $id</h1>";
-
-        return new Response($content);
+        return $this->render('posts.html.twig', [
+            'postId' => $id,
+        ]);
     }
 }
