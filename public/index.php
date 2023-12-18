@@ -3,15 +3,19 @@
 define('BASE_PATH', dirname(__DIR__));
 
 require_once BASE_PATH . '/vendor/autoload.php';
+require_once BASE_PATH . '/config/services.php';
 
 use Framework\Http\Kernel;
 use Framework\Http\Request;
-use Framework\Routing\Router;
+use League\Container\Container;
 
 $request = Request::createFromGlobals();
 
-$router = new Router();
-$kernel = new Kernel($router);
+/** @var Container $container */
+$container = require BASE_PATH . '/config/services.php';
+
+/** @var Kernel $kernel */
+$kernel = $container->get(Kernel::class);
 
 $response = $kernel->handle($request);
 $response->send();
