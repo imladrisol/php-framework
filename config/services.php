@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Framework\Controller\AbstractController;
 use Framework\Dbal\ConnectionFactory;
 use Framework\Http\Kernel;
+use Framework\Console\Kernel as KernelConsole;
 use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
@@ -25,9 +26,15 @@ $dotenv = new Dotenv();
 $dotenv->load(BASE_PATH . '/.env');
 
 $container = new Container();
+
 $container->delegate(new ReflectionContainer(true));
+
+$container->add('framework-commands-namespace', new StringArgument('Framework\\Console\\Commands\\'));
+
 $container->add('APP_ENV', $appEnv);
+
 $container->add(RouterInterface::class, Router::class);
+
 $container->extend(RouterInterface::class)
     ->addMethodCall('registerRoutes', [new ArrayArgument($routes)]);
 
@@ -50,5 +57,7 @@ $container->add(ConnectionFactory::class)
 $container->addShared(Connection::class, function () use ($container): Connection {
     return $container->get(ConnectionFactory::class)->create();
 });
+
+$container->add(KernelConsole::class)->addArgument($container);
 
 return $container;
