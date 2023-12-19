@@ -10,13 +10,15 @@ final class Kernel
 {
 
     public function __construct(
-        private readonly ContainerInterface $container
+        private readonly ContainerInterface $container,
+        private readonly Application $app
     ) {}
 
     public function handle(): int
     {
         $this->registerCommands();
-        return 0;
+
+        return $this->app->run();
     }
 
     private function registerCommands(): void

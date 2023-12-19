@@ -13,6 +13,6 @@ final class MigrateCommand implements CommandInterface
 
     public function execute(array $params = []): int
     {
-
+        return 0;
     }
 }
