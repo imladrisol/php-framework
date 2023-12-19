@@ -65,6 +65,7 @@ $container->add(Application::class)->addArgument($container);
 $container->add(KernelConsole::class)->addArgument($container)->addArgument(Application::class);
 
 $container->add('console:migrate', MigrateCommand::class)
-    ->addArgument(Connection::class);
+    ->addArgument(Connection::class)
+    ->addArgument(new StringArgument(BASE_PATH . '/database/migrations'));
 
 return $container;
