@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Entities\Post;
 use Framework\Controller\AbstractController;
 use Framework\Http\Request;
 use Framework\Http\Response;
@@ -24,6 +25,11 @@ final class PostsController extends AbstractController
 
     public function store()
     {
-        dd($this->request->getPostData());
+        $post = Post::create(
+            $this->request->getPostData()['title'],
+            $this->request->getPostData()['body']
+        );
+
+        dd($post);
     }
 }
