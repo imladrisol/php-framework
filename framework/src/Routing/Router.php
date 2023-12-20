@@ -6,6 +6,7 @@ namespace Framework\Routing;
 
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use Framework\Controller\AbstractController;
 use Framework\Http\Exceptions\MethodIsNotAllowedException;
 use Framework\Http\Exceptions\RouteNotFoundException;
 use Framework\Http\Request;
@@ -23,6 +24,9 @@ final class Router implements RouterInterface
         if (is_array($handler)) {
             [$controllerId, $action] = $handler;
             $controller = $container->get($controllerId);
+            if (is_subclass_of($controller, AbstractController::class)) {
+               $controller->setRequest($request);
+            }
             $handler = [$controller, $action];
         }
 

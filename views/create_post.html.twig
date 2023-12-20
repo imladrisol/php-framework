@@ -1,16 +1,15 @@
-{% extends 'default.html.twig' %}
+{% extends 'layouts/default.html.twig' %}
 
 {% block main %}
 <h1>Add new post</h1>
-    <form>
+    <form method="post" action="/posts">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input class="form-control" type="text" id="title" aria-describedby="titleHelp">
-            <div id="titleHelp" class="form-text">add post title</div>
+            <input class="form-control" type="text" name="title" id="title" aria-describedby="titleHelp" required>
         </div>
         <div class="mb-3">
             <label for="body" class="form-label">Content</label>
-            <textarea class="form-control" name="body" id="" cols="30" rows="10"></textarea>
+            <textarea class="form-control" name="body" id="" cols="30" rows="10" required></textarea>
         </div>
 
         <button class="btn btn-primary" type="submit">Add</button>
